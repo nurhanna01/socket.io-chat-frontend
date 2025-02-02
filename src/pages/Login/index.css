@@ -1,0 +1,44 @@
+.wrapper {
+  background-color: lightblue;
+  width: 50%;
+  height: 100%;
+  color: black;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .content {
+    padding-bottom: 3rem;
+    background-color: white;
+    height: 100%;
+    border-radius: 40px;
+    max-height: 90%;
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+    .header {
+      font-style: oblique;
+      font-weight: bold;
+      color: blue;
+      margin-top: 3rem;
+    }
+    .container-message {
+      height: 0.5rem;
+      .error-message {
+        color: red;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .wrapper {
+    width: 100%;
+    height: 80vh;
+    .content {
+      min-width: 90%;
+    }
+  }
+}

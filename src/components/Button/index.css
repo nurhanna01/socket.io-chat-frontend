@@ -1,0 +1,8 @@
+.button {
+  background-color: #4343e4;
+  width: 80%;
+}
+
+.button:active {
+  border-width: 2px;
+}
