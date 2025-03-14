@@ -3,13 +3,15 @@ import "./index.css";
 import Button from "../../components/Button";
 import InputForm from "../../components/InputForm";
 import { socket } from "../../services/socket";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsConnected] = useState(socket.connected);
+  const [, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
-  const [isDisableJoin, setIsDisableJoin] = useState(false);
+  const [isDisableJoin] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     function onConnect() {
       setIsConnected(true);
@@ -37,8 +39,20 @@ const Login = () => {
     }
     setIsLoading(true);
     console.log("process join..");
-    socket.emit("JOIN_APP", username, () => {
+    socket.emit("JOIN_APP", { username }, (response: void) => {
+      try {
+        console.log(response, "=>response join");
+        return;
+      } catch (error) {
+        console.log("error join app :", error);
+      }
+    });
+    socket.on("JOIN_CONFIRMED", (data) => {
+      localStorage.setItem("messages", JSON.stringify(data.message));
+      localStorage.setItem("profile", JSON.stringify(data.user));
+      localStorage.setItem("users", JSON.stringify(data.users));
       setIsLoading(false);
+      navigate("/messages");
     });
   };
 
@@ -58,10 +72,14 @@ const Login = () => {
         <div className="header">Online Chat App</div>
         <div>
           <div className="formContainer">
-            <InputForm value={username} onChangeButton={handleInput} />
+            <InputForm
+              value={username}
+              onChangeButton={handleInput}
+              placeholder="username"
+            />
           </div>
-          <div className="container-message">
-            <span className="error-message">{errorMessage}</span>
+          <div className="containerMessage">
+            <span className="errorMessage">{errorMessage}</span>
           </div>
         </div>
         <div className="buttonContainer">

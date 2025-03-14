@@ -1,18 +1,19 @@
 .wrapper {
-  background-color: lightblue;
   width: 50%;
   height: 100%;
-  color: black;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
+  color: black;
+  background-color: lightblue;
   .content {
-    padding-bottom: 3rem;
+    padding: 2rem;
     background-color: white;
     height: 100%;
     border-radius: 40px;
+    box-shadow: 5px 5px 5px gray;
     max-height: 90%;
     min-width: 50%;
     display: flex;
@@ -24,9 +25,9 @@
       color: blue;
       margin-top: 3rem;
     }
-    .container-message {
+    .containerMessage {
       height: 0.5rem;
-      .error-message {
+      .errorMessage {
         color: red;
       }
     }
@@ -38,7 +39,8 @@
     width: 100%;
     height: 80vh;
     .content {
-      min-width: 90%;
+      height: 100%;
+      width: 90%;
     }
   }
 }
