@@ -1,23 +1,16 @@
 .wrapper {
-  width: 50%;
-  max-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background-color: lightblue;
   .containerMessages {
     min-width: 50%;
-    min-height: 80%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 2rem;
-    border-radius: 1rem;
+    border-radius: 40px;
     box-shadow: 5px 5px 5px;
     background-color: white;
     gap: 1rem;
+    overflow: auto;
     .containerTitle {
       width: 100%;
       .title {
@@ -52,6 +45,14 @@
           position: relative;
           top: 25%;
           left: 3rem;
+          border-radius: 0.5rem;
+        }
+        .iconAdd:hover {
+          padding-right: 0.3rem;
+        }
+        .iconAdd:active {
+          opacity: 0.5rem;
+          transition: 0s;
         }
       }
     }

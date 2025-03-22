@@ -1,10 +1,10 @@
 #root {
   min-width: 100%;
-  max-height: 100%;
+  max-height: 100vh;
   margin: 0 auto;
   padding: 0rem;
   text-align: center;
-  background-color: white;
+  background-color: #ebeaff;
   display: flex;
   justify-content: center;
 }

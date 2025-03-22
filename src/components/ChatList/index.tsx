@@ -26,7 +26,7 @@ const ChatList = (props: chatInterface) => {
       <div className="timeCount">
         <div className="time">{props.time}</div>
         <div className="count">
-          {props.is_read == false ? <BsCircleFill color="blue" /> : ""}
+          {props.is_read == false ? <BsCircleFill color="#3D3BF3" /> : ""}
         </div>
       </div>
     </div>
