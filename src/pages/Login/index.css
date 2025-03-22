@@ -1,13 +1,13 @@
 .wrapper {
   width: 50%;
-  height: 100%;
+  color: black;
+  background-color: #9694ff;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  color: black;
-  background-color: lightblue;
   .content {
     padding: 2rem;
     background-color: white;
@@ -19,16 +19,17 @@
     display: flex;
     flex-direction: column;
     row-gap: 5rem;
+    overflow: auto;
     .header {
       font-style: oblique;
       font-weight: bold;
-      color: blue;
+      color: #3d3bf3;
       margin-top: 3rem;
     }
     .containerMessage {
       height: 0.5rem;
       .errorMessage {
-        color: red;
+        color: #ff2929;
       }
     }
   }

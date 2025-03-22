@@ -3,6 +3,8 @@ import InputForm from "../../components/InputForm";
 import ChatList from "../../components/ChatList";
 import React, { useEffect, useState } from "react";
 import { BsFillPlusSquareFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const Messages = () => {
   interface messageInterface {
@@ -22,6 +24,8 @@ const Messages = () => {
   const [message, setMessage] = useState([]);
   const [profile, setProfile] = useState<profileInterface | null>(null);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const today = moment.utc().startOf("day");
 
   useEffect(() => {
     const storedProfile = localStorage.getItem("profile");
@@ -33,6 +37,10 @@ const Messages = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
+  const handleClickAdd = () => {
+    navigate("/online");
+  };
+
   return (
     <div className="wrapper">
       <div className="containerMessages">
@@ -47,8 +55,12 @@ const Messages = () => {
               placeholder="search"
             />
           </div>
-          <div className="addChat">
-            <BsFillPlusSquareFill color="blue" size={50} className="iconAdd" />
+          <div className="addChat" onClick={handleClickAdd}>
+            <BsFillPlusSquareFill
+              color="#3D3BF3"
+              size={50}
+              className="iconAdd"
+            />
           </div>
         </div>
         <div className="list">
@@ -62,7 +74,11 @@ const Messages = () => {
                     ? e.sender_username
                     : e.receiver_username
                 }
-                time={e.timestamp.split("T")[1]}
+                time={
+                  moment.utc(e.timestamp).startOf("day").isBefore(today)
+                    ? moment.utc(e.timestamp).format("DD MMMM")
+                    : moment.utc(e.timestamp).format("HH.mm")
+                }
                 is_read={e.is_read == 0 ? false : true}
               />
             );
