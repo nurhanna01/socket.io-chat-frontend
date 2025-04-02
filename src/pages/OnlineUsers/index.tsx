@@ -11,6 +11,11 @@ const OnlineUsers = () => {
     username: string;
     isOnline: boolean;
   }
+
+  interface State {
+    id: number;
+    username: string;
+  }
   const [users, setUsers] = useState([]);
   const [isUpdateUser, setIsUpdateUser] = useState(false);
   useEffect(() => {
@@ -22,6 +27,10 @@ const OnlineUsers = () => {
 
   const handleClickBack = () => {
     navigate("/messages");
+  };
+
+  const handleClickChat = (data: State) => {
+    navigate("/chat", { state: { data } });
   };
 
   socket.on("USERS_UPDATED", (data) => {
@@ -45,7 +54,14 @@ const OnlineUsers = () => {
         <div className="list">
           {users?.map((e: Users) => {
             return (
-              <UserList name={e.username} key={e.id} is_online={e.isOnline} />
+              <UserList
+                name={e.username}
+                key={e.id}
+                is_online={e.isOnline}
+                onClick={() =>
+                  handleClickChat({ id: e.id, username: e.username })
+                }
+              />
             );
           })}
         </div>

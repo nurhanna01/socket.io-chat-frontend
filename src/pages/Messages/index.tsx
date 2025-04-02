@@ -5,23 +5,13 @@ import React, { useEffect, useState } from "react";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import {
+  messagesInterface,
+  profileInterface,
+} from "../../interfaces/interface";
 
 const Messages = () => {
-  interface messageInterface {
-    content: string;
-    sender_username: string;
-    receiver_username: string;
-    receiver_id: number;
-    is_read: number;
-    timestamp: string;
-  }
-
-  interface profileInterface {
-    id: number;
-    username: string;
-    is_online: number;
-  }
-  const [message, setMessage] = useState([]);
+  const [message, setMessage] = useState<messagesInterface | null>(null);
   const [profile, setProfile] = useState<profileInterface | null>(null);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -64,22 +54,31 @@ const Messages = () => {
           </div>
         </div>
         <div className="list">
-          {message?.map((e: messageInterface, i) => {
+          {Object.values(message ?? {}).map((e: messagesInterface, i) => {
+            console.log(e, "z");
+            const last_index = e.list_message.length - 1;
             return (
               <ChatList
                 key={i}
-                message={e.content}
+                message={e.list_message[last_index].content}
                 name={
-                  profile?.id == e.receiver_id
-                    ? e.sender_username
-                    : e.receiver_username
+                  profile?.id == e.list_message[last_index].receiver_id
+                    ? e.list_message[last_index].sender_username
+                    : e.list_message[last_index].receiver_username
                 }
                 time={
-                  moment.utc(e.timestamp).startOf("day").isBefore(today)
-                    ? moment.utc(e.timestamp).format("DD MMMM")
-                    : moment.utc(e.timestamp).format("HH.mm")
+                  moment
+                    .utc(e.list_message[last_index].timestamp)
+                    .startOf("day")
+                    .isBefore(today)
+                    ? moment
+                        .utc(e.list_message[last_index].timestamp)
+                        .format("DD MMMM")
+                    : moment
+                        .utc(e.list_message[last_index].timestamp)
+                        .format("HH.mm")
                 }
-                is_read={e.is_read == 0 ? false : true}
+                is_read={e.list_message[last_index].is_read == 0 ? false : true}
               />
             );
           })}

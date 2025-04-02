@@ -1,0 +1,29 @@
+.containerMessageItem {
+  #isme {
+    background-color: #9694ff;
+  }
+  #notme {
+    background-color: #ebeaff;
+  }
+  .textContainer {
+    position: relative;
+    min-height: 3rem;
+    border-radius: 0.5rem;
+    .text {
+      position: absolute;
+      left: 0;
+      color: black;
+      min-height: 1.5rem;
+      font-size: medium;
+      padding: 0.5rem;
+    }
+    .time {
+      position: absolute;
+      right: 0;
+      height: 1.5rem;
+      bottom: 0;
+      font-size: small;
+      margin: 0.1rem;
+    }
+  }
+}
