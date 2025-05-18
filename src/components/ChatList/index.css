@@ -17,17 +17,22 @@
       color: black;
       font-size: 1.2rem;
       font-family: sans-serif;
-      font-weight: 100;
+      font-weight: 600;
       position: relative;
       left: 1rem;
       top: 0.3rem;
     }
     .message {
-      height: 50%;
-      width: fit-content;
+      height: auto;
+      text-align: left;
+      max-width: 100%;
+      white-space: nowrap;
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
       font-size: 1.2rem;
       font-family: sans-serif;
-      font-weight: 100;
+      font-weight: 500;
       position: relative;
       left: 1rem;
       top: 0.4rem;

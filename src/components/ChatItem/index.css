@@ -1,21 +1,20 @@
 .containerMessageItem {
-  #isme {
-    background-color: #9694ff;
-  }
-  #notme {
-    background-color: #ebeaff;
-  }
+  height: fit-content;
+  width: 100%;
   .textContainer {
     position: relative;
-    min-height: 3rem;
+    height: 100%;
     border-radius: 0.5rem;
+    width: 90%;
     .text {
-      position: absolute;
-      left: 0;
+      text-align: left;
       color: black;
-      min-height: 1.5rem;
+      max-height: 100%;
       font-size: medium;
-      padding: 0.5rem;
+      padding: 1rem;
+      word-break: break-word;
+      white-space: normal;
+      overflow-wrap: break-word;
     }
     .time {
       position: absolute;
@@ -23,7 +22,17 @@
       height: 1.5rem;
       bottom: 0;
       font-size: small;
-      margin: 0.1rem;
+      margin: 1rem;
     }
+  }
+  #isme {
+    background-color: #9694ff;
+    border-bottom-right-radius: 15rem;
+    margin-left: 10%;
+  }
+  #notme {
+    background-color: #ebeaff;
+    border-bottom-left-radius: 15rem;
+    margin-right: 10%;
   }
 }

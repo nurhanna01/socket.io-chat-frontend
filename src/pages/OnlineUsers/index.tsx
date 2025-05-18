@@ -5,6 +5,10 @@ import { BsArrowLeftSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../../services/socket";
 
+export interface clickChatState {
+  id: number;
+  username: string;
+}
 const OnlineUsers = () => {
   interface Users {
     id: number;
@@ -12,10 +16,6 @@ const OnlineUsers = () => {
     isOnline: boolean;
   }
 
-  interface State {
-    id: number;
-    username: string;
-  }
   const [users, setUsers] = useState([]);
   const [isUpdateUser, setIsUpdateUser] = useState(false);
   useEffect(() => {
@@ -29,7 +29,7 @@ const OnlineUsers = () => {
     navigate("/messages");
   };
 
-  const handleClickChat = (data: State) => {
+  const handleClickChat = (data: clickChatState) => {
     navigate("/chat", { state: { data } });
   };
 

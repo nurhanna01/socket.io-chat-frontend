@@ -9,6 +9,7 @@ import {
   messagesInterface,
   profileInterface,
 } from "../../interfaces/interface";
+import { clickChatState } from "../OnlineUsers";
 
 const Messages = () => {
   const [message, setMessage] = useState<messagesInterface | null>(null);
@@ -29,6 +30,11 @@ const Messages = () => {
   };
   const handleClickAdd = () => {
     navigate("/online");
+  };
+
+  const handleClickChat = (data: clickChatState) => {
+    console.log(data, "data chat");
+    navigate("/chat", { state: { data } });
   };
 
   return (
@@ -55,7 +61,6 @@ const Messages = () => {
         </div>
         <div className="list">
           {Object.values(message ?? {}).map((e: messagesInterface, i) => {
-            console.log(e, "z");
             const last_index = e.list_message.length - 1;
             return (
               <ChatList
@@ -79,6 +84,15 @@ const Messages = () => {
                         .format("HH.mm")
                 }
                 is_read={e.list_message[last_index].is_read == 0 ? false : true}
+                onclick={() =>
+                  handleClickChat({
+                    id: e.friend_id,
+                    username:
+                      profile?.id == e.list_message[last_index].receiver_id
+                        ? e.list_message[last_index].sender_username
+                        : e.list_message[last_index].receiver_username,
+                  })
+                }
               />
             );
           })}

@@ -1,6 +1,7 @@
 .wrapper {
   .containerRoom {
-    min-width: 50%;
+    /* notes: be careful with this annoying width */
+    width: 70%;
     height: 90%;
     display: flex;
     flex-direction: column;
@@ -9,14 +10,15 @@
     border-radius: 40px;
     box-shadow: 5px 5px 5px;
     background-color: white;
-    gap: 1.5rem;
-    overflow: auto;
+    gap: 2rem;
+    position: relative;
     .headerRoom {
+      z-index: 999;
+      width: 100%;
       display: flex;
-      flex-direction: row;
-      height: 2rem;
+      flex-direction: column;
+      height: 20%;
       .iconBack {
-        position: relative;
         left: 1rem;
       }
       .iconBack:hover {
@@ -29,30 +31,41 @@
       .title {
         color: black;
         width: 100%;
-        position: relative;
-        left: 1rem;
         font-family: sans-serif;
         font-weight: bold;
         font-size: medium;
       }
-    }
-    .room {
       .nameRoom {
         display: flex;
         align-items: center;
         gap: 1rem;
         min-height: 2rem;
+        margin-left: 0.5rem;
         font-weight: bold;
         font-size: larger;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 1rem;
+        width: 100%;
       }
+    }
+    .room {
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 80%;
       .list {
-        height: 80%;
+        height: 85%;
         padding: 0.5rem;
         gap: 1rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        overflow: scroll;
+      }
+      .sendText {
+        height: 10%;
+        margin-bottom: 0;
       }
     }
   }

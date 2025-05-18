@@ -1,6 +1,7 @@
 export interface messagesInterface {
   id: number;
   friend_id: number;
+  room_id: number;
   list_message: messageInterface[];
 }
 
