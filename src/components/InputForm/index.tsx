@@ -4,6 +4,7 @@ interface InputInterface {
   value: string;
   onChangeButton: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 const InputForm = (props: InputInterface) => {
   return (
@@ -13,6 +14,7 @@ const InputForm = (props: InputInterface) => {
       className="inputForm"
       value={props.value}
       onChange={props.onChangeButton}
+      onKeyDown={props.onKeyDown}
     />
   );
 };
