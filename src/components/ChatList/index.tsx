@@ -1,5 +1,4 @@
 import "./index.css";
-// import { BsPerson } from "@react-icons/bs";
 import { BsPerson } from "react-icons/bs";
 import { BsCircleFill } from "react-icons/bs";
 interface chatInterface {
@@ -8,11 +7,12 @@ interface chatInterface {
   time: string;
   count?: string;
   is_read: boolean;
+  onclick?: () => void;
 }
 
 const ChatList = (props: chatInterface) => {
   return (
-    <div className="containerMessageList">
+    <div className="containerMessageList" onClick={props.onclick}>
       <div className="photoProfile">
         <BsPerson
           size={60}

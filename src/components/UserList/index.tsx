@@ -5,11 +5,12 @@ import { BsCircleFill } from "react-icons/bs";
 interface userInterface {
   name: string;
   is_online?: boolean;
+  onClick: () => void;
 }
 
 const UserList = (props: userInterface) => {
   return (
-    <div className="containerUserList">
+    <div className="containerUserList" onClick={props.onClick}>
       <div className="photoProfile">
         <BsPerson className="icon" />
       </div>

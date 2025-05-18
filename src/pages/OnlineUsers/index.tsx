@@ -5,12 +5,17 @@ import { BsArrowLeftSquareFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../../services/socket";
 
+export interface clickChatState {
+  id: number;
+  username: string;
+}
 const OnlineUsers = () => {
   interface Users {
     id: number;
     username: string;
     isOnline: boolean;
   }
+
   const [users, setUsers] = useState([]);
   const [isUpdateUser, setIsUpdateUser] = useState(false);
   useEffect(() => {
@@ -22,6 +27,10 @@ const OnlineUsers = () => {
 
   const handleClickBack = () => {
     navigate("/messages");
+  };
+
+  const handleClickChat = (data: clickChatState) => {
+    navigate("/chat", { state: { data } });
   };
 
   socket.on("USERS_UPDATED", (data) => {
@@ -45,7 +54,14 @@ const OnlineUsers = () => {
         <div className="list">
           {users?.map((e: Users) => {
             return (
-              <UserList name={e.username} key={e.id} is_online={e.isOnline} />
+              <UserList
+                name={e.username}
+                key={e.id}
+                is_online={e.isOnline}
+                onClick={() =>
+                  handleClickChat({ id: e.id, username: e.username })
+                }
+              />
             );
           })}
         </div>
