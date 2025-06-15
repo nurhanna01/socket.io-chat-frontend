@@ -13,14 +13,31 @@
     overflow: auto;
     .containerTitle {
       width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       .title {
         color: black;
-        width: fit-content;
         position: relative;
         left: 1rem;
         font-family: sans-serif;
         font-weight: bold;
         font-size: medium;
+        width: 70%;
+        text-align: left;
+      }
+      .iconOff {
+        width: 30%;
+        align-items: right;
+      }
+      .iconOff:hover {
+        padding-left: 0.3rem;
+        size-adjust: 0.5rem;
+        transition: 0.2s;
+      }
+      .iconOff:active {
+        opacity: 0.5rem;
+        transition: 0s;
       }
     }
     .header {

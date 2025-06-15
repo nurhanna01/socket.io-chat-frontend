@@ -28,24 +28,16 @@
     }
   }
   .onlineContainer {
-    width: 25%;
+    width: 30%;
     display: flex;
     flex-direction: column;
-    .time {
-      height: 50%;
-      color: black;
-      position: relative;
-      top: 0.4rem;
-    }
-    .count {
-      height: 50%;
-      color: black;
-      .icon {
-        width: fit-content;
-        position: relative;
-        left: 2rem;
-        top: 0.5rem;
-      }
+    .icon {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      height: 2rem;
+      padding: 0.2rem;
     }
   }
 }

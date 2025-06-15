@@ -15,7 +15,7 @@ const ChatList = (props: chatInterface) => {
     <div className="containerMessageList" onClick={props.onclick}>
       <div className="photoProfile">
         <BsPerson
-          size={60}
+          size={30}
           style={{ verticalAlign: "center", paddingTop: 15 }}
         />
       </div>

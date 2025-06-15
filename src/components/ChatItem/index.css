@@ -15,6 +15,7 @@
       word-break: break-word;
       white-space: normal;
       overflow-wrap: break-word;
+      width: 80%;
     }
     .time {
       position: absolute;
@@ -23,16 +24,17 @@
       bottom: 0;
       font-size: small;
       margin: 1rem;
+      width: 20%;
     }
   }
   #isme {
     background-color: #9694ff;
-    border-bottom-right-radius: 15rem;
+    border-bottom-right-radius: 5rem;
     margin-left: 10%;
   }
   #notme {
     background-color: #ebeaff;
-    border-bottom-left-radius: 15rem;
+    border-bottom-left-radius: 5rem;
     margin-right: 10%;
   }
 }

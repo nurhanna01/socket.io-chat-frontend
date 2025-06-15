@@ -24,6 +24,8 @@ const RoomChat = () => {
   useEffect(() => {
     const storedProfile = localStorage.getItem("profile");
     setProfile(JSON.parse(storedProfile || ""));
+  }, []);
+  useEffect(() => {
     socket.on("DETAIL_CHAT", (data) => {
       setMessages(data);
       setDetailMessages(data);
@@ -46,6 +48,7 @@ const RoomChat = () => {
     });
 
     socket.on("SUCCESS_SAVE_MESSAGE", () => {
+      console.log("INI KALAU SUCCESS SAVE MESSAGEs");
       if (profile && profile.id) {
         socket.emit("DETAIL_CHAT", {
           my_id: profile?.id,
@@ -94,7 +97,7 @@ const RoomChat = () => {
       <div className="containerRoom">
         <div className="headerRoom">
           <BsArrowLeftSquareFill
-            className="iconBack"
+            className="iconBackChat"
             color="blue"
             size={30}
             onClick={onClickBack}

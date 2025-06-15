@@ -2,6 +2,7 @@ import "./index.css";
 // import { BsPerson } from "@react-icons/bs";
 import { BsPerson } from "react-icons/bs";
 import { BsCircleFill } from "react-icons/bs";
+import { BsChatLeftTextFill } from "react-icons/bs";
 interface userInterface {
   name: string;
   is_online?: boolean;
@@ -19,11 +20,10 @@ const UserList = (props: userInterface) => {
       </div>
       <div className="onlineContainer">
         <div className="count">
-          {props.is_online == true ? (
-            <BsCircleFill color="blue" className="icon" />
-          ) : (
-            ""
-          )}
+          <div className="icon">
+            {props.is_online == true ? <BsCircleFill color="blue" /> : ""}
+            <BsChatLeftTextFill color="blue" />
+          </div>
         </div>
       </div>
     </div>

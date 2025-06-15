@@ -10,6 +10,8 @@ import {
   profileInterface,
 } from "../../interfaces/interface";
 import { clickChatState } from "../OnlineUsers";
+import { socket } from "../../services/socket";
+import { FaPowerOff } from "react-icons/fa6";
 
 const Messages = () => {
   const [message, setMessage] = useState<messagesInterface | null>(null);
@@ -23,8 +25,23 @@ const Messages = () => {
     setProfile(JSON.parse(storedProfile || ""));
     const storedMessage = localStorage.getItem("messages");
     setMessage(JSON.parse(storedMessage || ""));
+
+    socket.on("UPDATE_LIST_MESSAGE", (data) => {
+      setMessage(data.message);
+      localStorage.setItem("messages", JSON.stringify(data.message));
+    });
     return () => {};
   }, []);
+
+  useEffect(() => {
+    socket.on("RECEIVE_MESSAGE", () => {
+      if (profile && profile.id) {
+        socket.emit("RECEIVE_MESSAGE", {
+          user_id: profile?.id,
+        });
+      }
+    });
+  }, [profile]);
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
@@ -42,6 +59,9 @@ const Messages = () => {
       <div className="containerMessages">
         <div className="containerTitle">
           <p className="title">Messages</p>
+          <div className="iconOff">
+            <FaPowerOff color="red" size={30} />
+          </div>
         </div>
         <div className="header">
           <div className="containerInput">
@@ -54,7 +74,7 @@ const Messages = () => {
           <div className="addChat" onClick={handleClickAdd}>
             <BsFillPlusSquareFill
               color="#3D3BF3"
-              size={50}
+              size={30}
               className="iconAdd"
             />
           </div>

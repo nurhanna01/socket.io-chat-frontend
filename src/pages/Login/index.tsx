@@ -60,6 +60,12 @@ const Login = () => {
     setUsername(e.target.value);
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleJoin();
+    }
+  };
+
   useEffect(() => {
     if (username.length > 0) {
       setErrorMessage("");
@@ -76,6 +82,7 @@ const Login = () => {
               value={username}
               onChangeButton={handleInput}
               placeholder="username"
+              onKeyDown={onKeyDown}
             />
           </div>
           <div className="containerMessage">
