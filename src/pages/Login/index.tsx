@@ -13,6 +13,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
+    localStorage.removeItem("username");
     function onConnect() {
       setIsConnected(true);
     }
@@ -39,14 +40,8 @@ const Login = () => {
     }
     setIsLoading(true);
     console.log("process join..");
-    socket.emit("JOIN_APP", { username }, (response: void) => {
-      try {
-        console.log(response, "=>response join");
-        return;
-      } catch (error) {
-        console.log("error join app :", error);
-      }
-    });
+    socket.emit("JOIN_APP", { username });
+    localStorage.setItem("username", username);
     socket.on("JOIN_CONFIRMED", (data) => {
       localStorage.setItem("messages", JSON.stringify(data.message));
       localStorage.setItem("profile", JSON.stringify(data.user));

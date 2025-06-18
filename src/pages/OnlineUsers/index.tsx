@@ -13,7 +13,7 @@ const OnlineUsers = () => {
   interface Users {
     id: number;
     username: string;
-    isOnline: boolean;
+    isOnline?: boolean;
   }
 
   const [users, setUsers] = useState([]);
