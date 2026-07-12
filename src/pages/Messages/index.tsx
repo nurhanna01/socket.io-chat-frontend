@@ -1,5 +1,5 @@
 import "./index.css";
-import InputForm from "../../components/InputForm";
+import InputForm from "../../components/Input";
 import ChatList from "../../components/ChatList";
 import React, { useEffect, useState } from "react";
 import { BsFillPlusSquareFill } from "react-icons/bs";

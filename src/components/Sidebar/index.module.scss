@@ -1,0 +1,55 @@
+@use "../../variables.scss" as *;
+
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .menu {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding-left: 1rem;
+  }
+  .search {
+    width: 90%;
+    padding: 0.5rem;
+  }
+  .onlineMessages {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    padding-left: 1rem;
+  }
+  .offlineMessages {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    padding-left: 1rem;
+  }
+  .profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: $button;
+    p {
+      padding-left: 1rem;
+    }
+    .icon {
+      padding-right: 1rem;
+    }
+  }
+}

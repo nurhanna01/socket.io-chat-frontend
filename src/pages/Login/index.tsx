@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "./index.css";
+import styles from "./index.module.scss";
 import Button from "../../components/Button";
-import InputForm from "../../components/InputForm";
+import InputForm from "../../components/Input";
 import { socket } from "../../services/socket";
 import { useNavigate } from "react-router-dom";
 
@@ -68,11 +68,11 @@ const Login = () => {
     console.log(username);
   }, [username]);
   return (
-    <div className="wrapper">
-      <div className="content">
-        <div className="header">Online Chat App</div>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <div className={styles.header}>Online Chat App</div>
         <div>
-          <div className="formContainer">
+          <div className={styles.formContainer}>
             <InputForm
               value={username}
               onChangeButton={handleInput}
@@ -80,11 +80,11 @@ const Login = () => {
               onKeyDown={onKeyDown}
             />
           </div>
-          <div className="containerMessage">
-            <span className="errorMessage">{errorMessage}</span>
+          <div className={styles.containerMessage}>
+            <span className={styles.errorMessage}>{errorMessage}</span>
           </div>
         </div>
-        <div className="buttonContainer">
+        <div className={styles.buttonContainer}>
           <Button
             text="join"
             onClickButton={handleJoin}
