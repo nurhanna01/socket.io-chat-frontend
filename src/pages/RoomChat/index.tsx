@@ -9,7 +9,7 @@ import {
 } from "../../interfaces/interface";
 import ChatItem from "../../components/ChatItem";
 import moment from "moment";
-import InputForm from "../../components/InputForm";
+import InputForm from "../../components/Input";
 
 const RoomChat = () => {
   const { state } = useLocation();

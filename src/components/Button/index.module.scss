@@ -1,0 +1,10 @@
+@use "../../variables.scss" as *;
+
+.button {
+  background-color: $button;
+  width: 80%;
+}
+
+.button:active {
+  border-width: 2px;
+}

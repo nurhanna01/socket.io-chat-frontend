@@ -1,0 +1,18 @@
+@use "../../variables.scss" as *;
+
+.container {
+  min-height: 100vh;
+  color: $text-primary;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 100%;
+  .sidebar {
+    width: 30%;
+    background-color: $bg-secondary;
+  }
+  .messages {
+    width: 70%;
+    background-color: $bg-primary;
+  }
+}

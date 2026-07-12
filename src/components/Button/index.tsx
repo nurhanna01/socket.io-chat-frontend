@@ -1,4 +1,4 @@
-import "./index.css";
+import styles from "./index.module.scss";
 
 interface buttonProps {
   text: string;
@@ -9,7 +9,7 @@ interface buttonProps {
 const Button = (props: buttonProps) => {
   return (
     <button
-      className="button"
+      className={styles.button}
       onClick={props.onClickButton}
       disabled={props.disableButton}
     >

@@ -5,11 +5,13 @@ interface InputInterface {
   onChangeButton: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  type?: string;
 }
-const InputForm = (props: InputInterface) => {
+const Input = (props: InputInterface) => {
+  const typeInput = props.type || "text";
   return (
     <input
-      type="text"
+      type={typeInput}
       placeholder={props.placeholder}
       className="inputForm"
       value={props.value}
@@ -19,4 +21,4 @@ const InputForm = (props: InputInterface) => {
   );
 };
 
-export default InputForm;
+export default Input;

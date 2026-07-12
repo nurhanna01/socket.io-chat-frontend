@@ -1,4 +1,4 @@
-import "./index.css";
+import styles from "./index.module.scss";
 interface chatItemInterface {
   text: string;
   time: string;
@@ -7,10 +7,12 @@ interface chatItemInterface {
 
 const ChatItem = (props: chatItemInterface) => {
   return (
-    <div className="containerMessageItem">
-      <div className="textContainer" id={props.is_me ? "isme" : "notme"}>
-        <div className="text">{props.text}</div>
-        <div className="time">{props.time}</div>
+    <div className={styles.containerMessageItem}>
+      <div
+        className={`${styles.textContainer} ${props.is_me ? styles.isme : styles.notme}`}
+      >
+        <div className={styles.text}>{props.text}</div>
+        <div className={styles.time}>{props.time}</div>
       </div>
     </div>
   );
