@@ -1,0 +1,10 @@
+@use "../../variables.scss" as *;
+
+.inputForm {
+  background-color: $bg-bubble-receiver;
+  min-height: 2.5rem;
+  min-width: 100%;
+  border-radius: 10px;
+  color: $text;
+  border: 1px solid $border;
+}

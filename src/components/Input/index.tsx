@@ -1,5 +1,5 @@
 import React from "react";
-import "./index.css";
+import style from "./index.module.scss";
 interface InputInterface {
   value: string;
   onChangeButton: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,7 +13,7 @@ const Input = (props: InputInterface) => {
     <input
       type={typeInput}
       placeholder={props.placeholder}
-      className="inputForm"
+      className={style.inputForm}
       value={props.value}
       onChange={props.onChangeButton}
       onKeyDown={props.onKeyDown}

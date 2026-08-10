@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import Button from "../../components/Button";
-import InputForm from "../../components/Input";
+import Input from "../../components/Input";
 import { socket } from "../../services/socket";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ const Login = () => {
   const [, setIsConnected] = useState(socket.connected);
   const [, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isDisableJoin] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
@@ -51,33 +52,47 @@ const Login = () => {
     });
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
   };
+  const handleInputPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleJoin();
+
+  const login = () => {
+    if(username==""){
+      setErrorMessage("Username Required!")
+    }else if(password==""){
+      setErrorMessage("Password required!")
     }
+    return true
   };
 
   useEffect(() => {
     if (username.length > 0) {
       setErrorMessage("");
     }
+    if (password.length > 0) {
+      setErrorMessage("");
+    }
     console.log(username);
-  }, [username]);
+  }, [username,password]);
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>Online Chat App</div>
         <div>
           <div className={styles.formContainer}>
-            <InputForm
+            <Input
               value={username}
-              onChangeButton={handleInput}
+              onChangeButton={handleInputUsername}
               placeholder="username"
-              onKeyDown={onKeyDown}
+            />
+            <Input
+              value={password}
+              onChangeButton={handleInputPassword}
+              placeholder="password"
             />
           </div>
           <div className={styles.containerMessage}>
@@ -85,12 +100,9 @@ const Login = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Button
-            text="join"
-            onClickButton={handleJoin}
-            disableButton={isDisableJoin}
-          />
+          <Button text="Login" onClickButton={login}></Button>
         </div>
+        <p>Don't have an account yet? <a>Register here!</a></p>
       </div>
     </div>
   );
