@@ -4,13 +4,15 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { socket } from "../../services/socket";
 import { useNavigate } from "react-router-dom";
+import { loginApi } from "../../api/auth";
+import toast, { Toaster } from "react-hot-toast";
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const [, setIsConnected] = useState(socket.connected);
-  const [, setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isDisableJoin] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -34,24 +36,6 @@ const Login = () => {
     };
   }, []);
 
-  const handleJoin = () => {
-    if (!username) {
-      setErrorMessage("username required!");
-      return;
-    }
-    setIsLoading(true);
-    console.log("process join..");
-    socket.emit("JOIN_APP", { username });
-    localStorage.setItem("username", username);
-    socket.on("JOIN_CONFIRMED", (data) => {
-      localStorage.setItem("messages", JSON.stringify(data.message));
-      localStorage.setItem("profile", JSON.stringify(data.user));
-      localStorage.setItem("users", JSON.stringify(data.users));
-      setIsLoading(false);
-      navigate("/messages");
-    });
-  };
-
   const handleInputUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
   };
@@ -59,14 +43,30 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-
-  const login = () => {
-    if(username==""){
-      setErrorMessage("Username Required!")
-    }else if(password==""){
-      setErrorMessage("Password required!")
+  const login = async () => {
+    try {
+      if (username == "") {
+        setErrorMessage("Username Required!");
+        return;
+      } else if (password == "") {
+        setErrorMessage("Password required!");
+        return;
+      }
+      setIsLoading(true);
+      const res = await loginApi(username, password);
+      setIsLoading(false);
+      if (res.status != 200) {
+        toast.error(res.data.message);
+      } else {
+        toast.success("success");
+        const { saveToken } = useAuth();
+        saveToken(res.data.token);
+        navigate("/messages");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      toast.error("Something went wrong");
     }
-    return true
   };
 
   useEffect(() => {
@@ -76,10 +76,10 @@ const Login = () => {
     if (password.length > 0) {
       setErrorMessage("");
     }
-    console.log(username);
-  }, [username,password]);
+  }, [username, password]);
   return (
     <div className={styles.container}>
+      <Toaster />
       <div className={styles.content}>
         <div className={styles.header}>Online Chat App</div>
         <div>
@@ -100,9 +100,16 @@ const Login = () => {
           </div>
         </div>
         <div className={styles.buttonContainer}>
-          <Button text="Login" onClickButton={login}></Button>
+          <Button
+            text="Login"
+            onClickButton={login}
+            disableButton={false}
+            loading={loading}
+          ></Button>
         </div>
-        <p>Don't have an account yet? <a>Register here!</a></p>
+        <p>
+          Don't have an account yet? <a>Register here!</a>
+        </p>
       </div>
     </div>
   );

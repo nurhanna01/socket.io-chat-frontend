@@ -1,9 +1,11 @@
+import Spinner from "../Spinner/spinner";
 import styles from "./index.module.scss";
 
 interface buttonProps {
   text: string;
   onClickButton: () => void;
   disableButton: boolean;
+  loading?:boolean
 }
 
 const Button = (props: buttonProps) => {
@@ -13,7 +15,7 @@ const Button = (props: buttonProps) => {
       onClick={props.onClickButton}
       disabled={props.disableButton}
     >
-      {props.text}
+      {props.loading ? <Spinner /> : props.text}
     </button>
   );
 };
