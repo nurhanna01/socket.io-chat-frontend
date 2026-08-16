@@ -2,39 +2,18 @@ import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import { socket } from "../../services/socket";
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../api/auth";
 import toast, { Toaster } from "react-hot-toast";
 import { UseAuth } from "../../context/AuthContext";
+import { UseSocket } from "../../context/SocketContext";
 
 const Login = () => {
-  const [, setIsConnected] = useState(socket.connected);
   const [loading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  useEffect(() => {
-    localStorage.removeItem("username");
-    function onConnect() {
-      setIsConnected(true);
-    }
-    function onDisconnect() {
-      setIsConnected(false);
-    }
-    socket.on("connect", () => {
-      onConnect();
-      console.log("socket connected =>", socket.connected);
-    });
-    socket.on("disconnect", onDisconnect);
-
-    // Clean up socket events on unmount
-    return () => {
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-    };
-  }, []);
 
   const handleInputUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -44,6 +23,7 @@ const Login = () => {
   };
 
   const { saveToken } = UseAuth();
+  const {connect}=UseSocket()
 
   const login = async () => {
     try {
@@ -62,6 +42,7 @@ const Login = () => {
       } else {
         toast.success("success");
         saveToken(res.data.token);
+        connect(res.data.token)
         navigate("/messages");
       }
     } catch (error) {

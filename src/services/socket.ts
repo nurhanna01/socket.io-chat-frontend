@@ -1,10 +1,17 @@
 import { io } from "socket.io-client";
 
-const socketURL = "ws://localhost:4000";
-const username = localStorage.getItem("username");
+const socketURL = import.meta.env.VITE_SOCKET_URL || "ws://localhost:3009";
+
+export const createSocket = (token: string) => {
+  return io(socketURL, {
+    auth: {
+      token: `Bearer ${token}`
+    },
+  });
+};
+
+// delete this later
 export const socket = io(socketURL, {
   query: {
-    username,
-    isnull: username ? false : true,
   },
 });
