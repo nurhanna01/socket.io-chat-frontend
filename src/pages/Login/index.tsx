@@ -6,7 +6,7 @@ import { socket } from "../../services/socket";
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../api/auth";
 import toast, { Toaster } from "react-hot-toast";
-import { useAuth } from "../../context/AuthContext";
+import { UseAuth } from "../../context/AuthContext";
 
 const Login = () => {
   const [, setIsConnected] = useState(socket.connected);
@@ -43,6 +43,8 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const { saveToken } = UseAuth();
+
   const login = async () => {
     try {
       if (username == "") {
@@ -59,13 +61,16 @@ const Login = () => {
         toast.error(res.data.message);
       } else {
         toast.success("success");
-        const { saveToken } = useAuth();
         saveToken(res.data.token);
         navigate("/messages");
       }
     } catch (error) {
       setIsLoading(false);
-      toast.error("Something went wrong");
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   };
 
