@@ -3,12 +3,12 @@ import styles from "./index.module.scss";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router-dom";
-import { loginApi } from "../../api/auth";
+import { registerApi } from "../../api/auth";
 import toast, { Toaster } from "react-hot-toast";
 import { UseAuth } from "../../context/AuthContext";
 import { UseSocket } from "../../context/SocketContext";
 
-const Login = () => {
+const Register = () => {
   const [loading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -36,9 +36,9 @@ const Login = () => {
         return;
       }
       setIsLoading(true);
-      const res = await loginApi(username, password);
+      const res = await registerApi(username, password);
       setIsLoading(false);
-      if (res.status != 200) {
+      if (res.status != 201) {
         const message = res.data.message;
         if (Array.isArray(message)) {
           message.forEach((msg) => toast.error(msg));
@@ -49,7 +49,7 @@ const Login = () => {
         toast.success("success");
         saveToken(res.data.token);
         connect(res.data.token);
-        navigate("/");
+        navigate("/login");
       }
     } catch (error) {
       setIsLoading(false);
@@ -101,17 +101,17 @@ const Login = () => {
         </div>
         <div className={styles.buttonContainer}>
           <Button
-            text="Login"
+            text="Register"
             onClickButton={login}
             disableButton={false}
             loading={loading}
           ></Button>
         </div>
         <p>
-          Don't have an account yet? <Link to="/register">Register here!</Link>
+          Back to <Link to="/login">Login</Link> page
         </p>
       </div>
     </div>
   );
 };
-export default Login;
+export default Register;
