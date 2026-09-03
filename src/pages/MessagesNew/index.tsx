@@ -24,9 +24,9 @@ const MessagesNew = () => {
 
   useEffect(() => {
     const storedProfile = localStorage.getItem("profile");
-    setProfile(JSON.parse(storedProfile || ""));
+    // setProfile(JSON.parse(storedProfile || ""));
     const storedMessage = localStorage.getItem("messages");
-    setMessage(JSON.parse(storedMessage || ""));
+    // setMessage(JSON.parse(storedMessage || ""));
 
     socket.on("UPDATE_LIST_MESSAGE", (data) => {
       setMessage(data.message);

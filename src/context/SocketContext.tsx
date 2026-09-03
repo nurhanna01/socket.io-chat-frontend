@@ -35,7 +35,10 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       onConnect();
       console.log("socket connected =>", socket.connected);
     });
-    socket.on("disconnect", onDisconnect);
+    socket.on("disconnect", (reason) => {
+      console.error("reason disconnect=>", reason);
+      onDisconnect();
+    });
 
     // Clean up socket events on unmount
     return () => {

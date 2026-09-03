@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+
   .title {
     display: flex;
     flex-direction: row;
@@ -13,6 +14,11 @@
     align-items: center;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  .listMessage {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
   .menu {
     display: flex;
@@ -24,17 +30,14 @@
     width: 90%;
     padding: 0.5rem;
   }
-  .onlineMessages {
+  .containerMessage {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: start;
-    padding-left: 1rem;
+    margin: 0.5rem;
   }
-  .offlineMessages {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    padding-left: 1rem;
+  .titleMessage {
+    left: 0;
   }
   .profile {
     display: flex;

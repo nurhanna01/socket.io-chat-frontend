@@ -1,12 +1,13 @@
+@use "../../variables.scss" as *;
+
 .containerMessageList {
   height: 80px;
   display: flex;
   flex-direction: row;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px lightgrey;
-  background-color: #ffffff;
+  background-color: $bg-bubble-sender;
+  color: $text;
   .photoProfile {
-    background-color: #b5a8d5;
     width: 20%;
   }
   .nameMessage {
@@ -14,12 +15,10 @@
     .name {
       height: 50%;
       width: fit-content;
-      color: black;
       font-size: 1.2rem;
       font-family: sans-serif;
       font-weight: 600;
       position: relative;
-      left: 1rem;
       top: 0.3rem;
     }
     .message {
@@ -34,9 +33,7 @@
       font-family: sans-serif;
       font-weight: 500;
       position: relative;
-      left: 1rem;
       top: 0.4rem;
-      color: grey;
     }
   }
   .timeCount {
@@ -45,7 +42,6 @@
     flex-direction: column;
     .time {
       height: 50%;
-      color: black;
       position: relative;
       top: 0.4rem;
       overflow: hidden;
@@ -53,7 +49,6 @@
     }
     .count {
       height: 50%;
-      color: black;
       position: relative;
       top: 0.4rem;
     }

@@ -1,6 +1,7 @@
-import "./index.css";
+import styles from "./index.module.scss";
 import { BsPerson } from "react-icons/bs";
 import { BsCircleFill } from "react-icons/bs";
+import { formatChatTime } from "../../utils/formatTime";
 interface chatInterface {
   name: string;
   message: string;
@@ -12,20 +13,20 @@ interface chatInterface {
 
 const ChatList = (props: chatInterface) => {
   return (
-    <div className="containerMessageList" onClick={props.onclick}>
-      <div className="photoProfile">
+    <div className={styles.containerMessageList} onClick={props.onclick}>
+      <div className={styles.photoProfile}>
         <BsPerson
           size={30}
           style={{ verticalAlign: "center", paddingTop: 15 }}
         />
       </div>
-      <div className="nameMessage">
-        <div className="name">{props.name}</div>
-        <div className="message">{props.message}</div>
+      <div className={styles.nameMessage}>
+        <div className={styles.name}>{props.name}</div>
+        <div className={styles.message}>{props.message}</div>
       </div>
-      <div className="timeCount">
-        <div className="time">{props.time}</div>
-        <div className="count">
+      <div className={styles.timeCount}>
+        <div className={styles.time}>{formatChatTime(props.time)}</div>
+        <div className={styles.count}>
           {props.is_read == false ? <BsCircleFill color="#3D3BF3" /> : ""}
         </div>
       </div>
