@@ -2,7 +2,14 @@ import styles from "./index.module.scss";
 import ChatItem from "../ChatItem";
 import Input from "../Input";
 import { BsPersonCircle } from "react-icons/bs";
+import { useChat } from "../../context/ChatContext";
+import { UseAuth } from "../../context/AuthContext";
+import { formatChatTime } from "../../utils/formatTime";
+import { useState } from "react";
 const Message = () => {
+  const { activeMessage } = useChat();
+  const { profile } = UseAuth();
+  const [text, setText] = useState("")
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -15,12 +22,20 @@ const Message = () => {
         </div>
       </div>
       <div className={styles.body}>
-        <ChatItem text="Hello" time="12.12" is_me={true}></ChatItem>
-        <ChatItem text="Hello" time="12.12" is_me={true}></ChatItem>
-        <ChatItem text="Hello" time="12.12" is_me={false}></ChatItem>
+        {activeMessage &&
+          activeMessage.map((data: any, i: number) => {
+            return (
+              <ChatItem
+                key={i}
+                text={data.content}
+                time={formatChatTime(data.timestamp)}
+                is_me={data.sender_id === profile?.id}
+              ></ChatItem>
+            );
+          })}
       </div>
       <div className={styles.input}>
-        <Input placeholder="send message" type="textarea" />
+        <Input placeholder="send message" type="textarea" value={text} onChangeButton={(e)=> setText(e.target.value)}/>
       </div>
     </div>
   );

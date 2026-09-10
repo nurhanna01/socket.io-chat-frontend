@@ -6,10 +6,20 @@ import { BsChatSquareTextFill } from "react-icons/bs";
 import { useChat } from "../../context/ChatContext";
 import ChatList from "../ChatList";
 const Sidebar = () => {
-  const { conversations, fetchConversation } = useChat();
+  const {
+    conversations,
+    fetchConversation,
+    storeActiveRoom,
+    fetchDetailConversation,
+  } = useChat();
   useEffect(() => {
     fetchConversation();
   }, []);
+
+  const getDetailMessage = async (room_id: number, friend_name: string) => {
+    storeActiveRoom(room_id, friend_name);
+    await fetchDetailConversation(room_id);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -30,12 +40,16 @@ const Sidebar = () => {
         <h3 className={styles.titleMessage}>Messages</h3>
         <div className={styles.listMessage}>
           {conversations?.length > 0 &&
-            conversations.map((data: any) => (
+            conversations.map((data: any, index: number) => (
               <ChatList
+                key={index}
                 name={data?.friend_name}
                 message={data?.last_message?.content}
                 time={data?.last_message?.timestamp}
                 is_read={data?.last_message?.is_read}
+                onclick={() =>
+                  getDetailMessage(data?.room_id, data?.friend_name)
+                }
               />
             ))}
         </div>

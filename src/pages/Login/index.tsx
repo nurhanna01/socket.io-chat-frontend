@@ -23,7 +23,7 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const { saveToken } = UseAuth();
+  const { saveToken, saveProfile } = UseAuth();
   const { connect } = UseSocket();
 
   const login = async () => {
@@ -48,6 +48,7 @@ const Login = () => {
       } else {
         toast.success("success");
         saveToken(res.data.token);
+        saveProfile(res.data.user.id, res.data.user.username)
         connect(res.data.token);
         navigate("/");
       }
