@@ -48,7 +48,7 @@ const Login = () => {
       } else {
         toast.success("success");
         saveToken(res.data.token);
-        saveProfile(res.data.user.id, res.data.user.username)
+        saveProfile(res.data.user.id, res.data.user.username);
         connect(res.data.token);
         navigate("/");
       }
@@ -84,12 +84,12 @@ const Login = () => {
           <div className={styles.formContainer}>
             <Input
               value={username}
-              onChangeButton={handleInputUsername}
+              onChange={handleInputUsername}
               placeholder="username"
             />
             <Input
               value={password}
-              onChangeButton={handleInputPassword}
+              onChange={handleInputPassword}
               placeholder="password"
               onTogglePassword={() => setShowPassword(!showPassword)}
               showPassword={showPassword}

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { UseSocket } from "./SocketContext";
 
 interface AuthContextType {
   token: string | null;
@@ -18,7 +19,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token"),
   );
-  const [profile, setProfile] = useState<Profile | null>(null);
+  
+  const [profile, setProfile] = useState<Profile | null>(
+    JSON.parse(localStorage.getItem("profile") || "null") as Profile,
+  );
 
   const saveToken = (token: string) => {
     setToken(token);
@@ -34,6 +38,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(null);
     localStorage.removeItem("token");
   };
+
+  const { connect } = UseSocket();
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedProfile = localStorage.getItem("profile");
+    if (storedToken && storedProfile) {
+      setToken(storedToken);
+      setProfile(JSON.parse(storedProfile));
+      connect(storedToken);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider

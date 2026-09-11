@@ -16,9 +16,9 @@ const Sidebar = () => {
     fetchConversation();
   }, []);
 
-  const getDetailMessage = async (room_id: number, friend_name: string) => {
-    storeActiveRoom(room_id, friend_name);
-    await fetchDetailConversation(room_id);
+  const getDetailMessage = async (room_id: number, friend_username: string) => {
+    storeActiveRoom(room_id, friend_username);
+    fetchDetailConversation(room_id);
   };
 
   return (
@@ -43,12 +43,12 @@ const Sidebar = () => {
             conversations.map((data: any, index: number) => (
               <ChatList
                 key={index}
-                name={data?.friend_name}
+                name={data?.friend_username}
                 message={data?.last_message?.content}
                 time={data?.last_message?.timestamp}
                 is_read={data?.last_message?.is_read}
                 onclick={() =>
-                  getDetailMessage(data?.room_id, data?.friend_name)
+                  getDetailMessage(data?.room_id, data?.friend_username)
                 }
               />
             ))}

@@ -8,12 +8,12 @@ import { ChatProvider } from "./context/ChatContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <SocketProvider>
+    <SocketProvider>
+      <AuthProvider>
         <ChatProvider>
           <App />
         </ChatProvider>
-      </SocketProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </SocketProvider>
   </StrictMode>,
 );

@@ -5,11 +5,22 @@ import { BsPersonCircle } from "react-icons/bs";
 import { useChat } from "../../context/ChatContext";
 import { UseAuth } from "../../context/AuthContext";
 import { formatChatTime } from "../../utils/formatTime";
-import { useState } from "react";
+import React, { useState } from "react";
+
 const Message = () => {
   const { activeMessage } = useChat();
   const { profile } = UseAuth();
-  const [text, setText] = useState("")
+  const [text, setText] = useState("");
+  const { sendMessage } = useChat();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (text.length == 0) return;
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(text);
+      setText("");
+    }
+  };
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -35,7 +46,13 @@ const Message = () => {
           })}
       </div>
       <div className={styles.input}>
-        <Input placeholder="send message" type="textarea" value={text} onChangeButton={(e)=> setText(e.target.value)}/>
+        <Input
+          placeholder="send message"
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
       </div>
     </div>
   );

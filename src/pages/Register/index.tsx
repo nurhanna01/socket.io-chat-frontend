@@ -83,12 +83,12 @@ const Register = () => {
           <div className={styles.formContainer}>
             <Input
               value={username}
-              onChangeButton={handleInputUsername}
+              onChange={handleInputUsername}
               placeholder="username"
             />
             <Input
               value={password}
-              onChangeButton={handleInputPassword}
+              onChange={handleInputPassword}
               placeholder="password"
               onTogglePassword={() => setShowPassword(!showPassword)}
               showPassword={showPassword}

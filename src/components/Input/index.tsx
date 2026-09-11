@@ -3,7 +3,7 @@ import style from "./index.module.scss";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 interface InputInterface {
   value: string;
-  onChangeButton: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   type?: string;
@@ -19,7 +19,7 @@ const Input = (props: InputInterface) => {
         placeholder={props.placeholder}
         className={style.inputForm}
         value={props.value}
-        onChange={props.onChangeButton}
+        onChange={props.onChange}
         onKeyDown={props.onKeyDown}
       />
       {typeInput === "password" && (
