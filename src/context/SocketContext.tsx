@@ -16,6 +16,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const connect = (token: string) => {
     const newSocket = createSocket(token);
     setSocket(newSocket);
+    socket?.emit("JOIN_APP");
   };
 
   const disconnect = () => {
@@ -32,6 +33,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     }
     socket.on("connect", () => {
       onConnect();
+      socket?.emit("JOIN_APP");
       console.log("socket connected =>", socket.connected);
     });
     socket.on("disconnect", (reason) => {

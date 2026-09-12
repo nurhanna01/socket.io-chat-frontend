@@ -16,15 +16,37 @@ interface ChatContextInterface {
 interface activeMessageType {
   content: string;
   sender_id: number;
-  sender_username: string;
+  sender_username?: string;
   is_read: number;
   timestamp: string;
+}
+
+interface Conversation {
+  room_id: number;
+  friend_id: number;
+  friend_name?: string;
+  last_message: {
+    content: string;
+    timestamp: string;
+    is_read: number;
+    sender_id: number;
+    sender_username?: string;
+  } | null;
+}
+
+interface MessageEvent {
+  content: string;
+  id: number;
+  room_id : number;
+  timestamp: string;
+  is_read: number;
+  sender_id: number;
 }
 
 const ChatContext = createContext<ChatContextInterface | null>(null);
 
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
-  const [conversations, setConversations] = useState([]);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeMessage, setActiveMessage] = useState<activeMessageType[]>([]);
   const [activeRoom, setActiveRoom] = useState({ id: 0, friend_username: "" });
 
@@ -57,16 +79,33 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!socket) return;
 
-    const handleSuccess = (data: any) => {
+    const handleSuccess = (data: MessageEvent) => {
       if (activeRoom && activeRoom.id == data.room_id) {
         setActiveMessage((prev) => [...prev, data]);
       }
     };
 
+    const handleReceive = (data: MessageEvent) => {
+      try {
+        if (activeRoom && activeRoom.id == data.room_id) {
+          setActiveMessage((prev) => [...prev, data]);
+        }
+        setConversations((prev) =>
+          prev.map((c) =>
+            c.room_id == data.room_id ? { ...c, last_message: data } : c,
+          ),
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     socket.on("SUCCESS_SAVE_MESSAGE", handleSuccess);
+    socket.on("RECEIVE_MESSAGE", handleReceive);
 
     return () => {
       socket.off("SUCCESS_SAVE_MESSAGE", handleSuccess);
+      socket.off("RECEIVE_MESSAGE", handleReceive);
     };
   }, [socket, activeRoom]);
 
