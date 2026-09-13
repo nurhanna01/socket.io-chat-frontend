@@ -2,16 +2,18 @@ import styles from "./index.module.scss";
 import ChatItem from "../ChatItem";
 import Input from "../Input";
 import { BsPersonCircle } from "react-icons/bs";
-import { useChat } from "../../context/ChatContext";
+import { activeMessageType, useChat } from "../../context/ChatContext";
 import { UseAuth } from "../../context/AuthContext";
 import { formatChatTime } from "../../utils/formatTime";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Message = () => {
-  const { activeMessage } = useChat();
+  const { activeMessage, activeRoom } = useChat();
   const { profile } = UseAuth();
   const [text, setText] = useState("");
   const { sendMessage } = useChat();
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const prevRoomId = useRef<number | null>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (text.length == 0) return;
@@ -21,6 +23,15 @@ const Message = () => {
       setText("");
     }
   };
+
+  useEffect(() => {
+    const isSameRoom = activeRoom?.id === prevRoomId.current;
+    bottomRef.current?.scrollIntoView({
+      behavior: isSameRoom ? "smooth" : "auto",
+    });
+    prevRoomId.current = activeRoom.id;
+  }, [activeMessage]);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -28,22 +39,24 @@ const Message = () => {
           <BsPersonCircle size={35} />
         </div>
         <div>
-          <strong>Hanna</strong>
+          <strong>{activeRoom.friend_username}</strong>
           <p>Online</p>
         </div>
       </div>
       <div className={styles.body}>
         {activeMessage &&
-          activeMessage.map((data: any, i: number) => {
+          activeMessage.length > 0 &&
+          activeMessage.map((message: activeMessageType, i) => {
             return (
               <ChatItem
                 key={i}
-                text={data.content}
-                time={formatChatTime(data.timestamp)}
-                is_me={data.sender_id === profile?.id}
+                text={message.content}
+                time={formatChatTime(message.timestamp)}
+                is_me={message.sender_id === profile?.id}
               ></ChatItem>
             );
           })}
+        <div ref={bottomRef}></div>
       </div>
       <div className={styles.input}>
         <Input

@@ -4,43 +4,38 @@ import { UseAuth } from "./AuthContext";
 import { UseSocket } from "./SocketContext";
 
 interface ChatContextInterface {
-  conversations: Array<object>;
+  conversations: Array<Conversation>;
   fetchConversation: () => void;
-  activeMessage: Array<object> | null;
-  activeRoom: { id: number; friend_username: string };
+  activeMessage: Array<activeMessageType> | null;
+  activeRoom: { id: number | null; friend_username: string };
   storeActiveRoom: (id: number, friend_username: string) => void;
   fetchDetailConversation: (room_id: number) => void;
   sendMessage: (content: string) => void;
 }
 
-interface activeMessageType {
+export interface activeMessageType {
   content: string;
   sender_id: number;
-  sender_username?: string;
   is_read: number;
   timestamp: string;
+  room_id?: number;
 }
 
-interface Conversation {
+interface activeRoom {
+  id: number | null;
+  friend_username: string;
+}
+
+export interface Conversation {
   room_id: number;
-  friend_id: number;
-  friend_name?: string;
+  friend_username: string;
   last_message: {
     content: string;
     timestamp: string;
     is_read: number;
     sender_id: number;
     sender_username?: string;
-  } | null;
-}
-
-interface MessageEvent {
-  content: string;
-  id: number;
-  room_id : number;
-  timestamp: string;
-  is_read: number;
-  sender_id: number;
+  };
 }
 
 const ChatContext = createContext<ChatContextInterface | null>(null);
@@ -48,7 +43,10 @@ const ChatContext = createContext<ChatContextInterface | null>(null);
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeMessage, setActiveMessage] = useState<activeMessageType[]>([]);
-  const [activeRoom, setActiveRoom] = useState({ id: 0, friend_username: "" });
+  const [activeRoom, setActiveRoom] = useState<activeRoom>({
+    id: null,
+    friend_username: "",
+  });
 
   const fetchConversation = async () => {
     const res = await getConversationsApi();
@@ -60,8 +58,12 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const fetchDetailConversation = async (room_id: number) => {
-    const res = await getDetailConversationApi(room_id);
-    setActiveMessage(res.data.messages);
+    try {
+      const res = await getDetailConversationApi(room_id);
+      setActiveMessage(res.data.messages);
+    } catch (error) {
+      console.error(`error fetchDetailConversation:`, error);
+    }
   };
 
   const { profile } = UseAuth();
@@ -79,13 +81,13 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!socket) return;
 
-    const handleSuccess = (data: MessageEvent) => {
+    const handleSuccess = (data: activeMessageType) => {
       if (activeRoom && activeRoom.id == data.room_id) {
         setActiveMessage((prev) => [...prev, data]);
       }
     };
 
-    const handleReceive = (data: MessageEvent) => {
+    const handleReceive = (data: activeMessageType) => {
       try {
         if (activeRoom && activeRoom.id == data.room_id) {
           setActiveMessage((prev) => [...prev, data]);

@@ -2,7 +2,7 @@ import React from "react";
 import style from "./index.module.scss";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 interface InputInterface {
-  value: string;
+  value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
