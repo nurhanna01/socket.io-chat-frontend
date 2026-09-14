@@ -1,8 +1,5 @@
-import "./index.css";
-// import { BsPerson } from "@react-icons/bs";
-import { BsPerson } from "react-icons/bs";
-import { BsCircleFill } from "react-icons/bs";
-import { BsChatLeftTextFill } from "react-icons/bs";
+import styles from "./index.module.scss";
+import { BsPersonCircle } from "react-icons/bs";
 interface userInterface {
   name: string;
   is_online?: boolean;
@@ -11,19 +8,14 @@ interface userInterface {
 
 const UserList = (props: userInterface) => {
   return (
-    <div className="containerUserList" onClick={props.onClick}>
-      <div className="photoProfile">
-        <BsPerson className="icon" />
-      </div>
-      <div className="nameContainer">
-        <div className="name">{props.name}</div>
-      </div>
-      <div className="onlineContainer">
-        <div className="count">
-          <div className="icon">
-            {props.is_online == true ? <BsCircleFill color="blue" /> : ""}
-            <BsChatLeftTextFill color="blue" />
-          </div>
+    <div className={styles.containerUserList} onClick={props.onClick}>
+      <div className={styles.wrapper}>
+        <div className={styles.photoProfile}>
+          <BsPersonCircle className={styles.icon} size={25} />
+          <span className={styles.onlineDot}></span>
+        </div>
+        <div className={styles.nameContainer}>
+          <div className={styles.name}>{props.name}</div>
         </div>
       </div>
     </div>

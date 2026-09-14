@@ -11,6 +11,7 @@ interface ChatContextInterface {
   storeActiveRoom: (id: number, friend_username: string) => void;
   fetchDetailConversation: (room_id: number) => void;
   sendMessage: (content: string) => void;
+  onlineUsers: { id: number; username: string }[];
 }
 
 export interface activeMessageType {
@@ -38,6 +39,15 @@ export interface Conversation {
   };
 }
 
+interface OnlineUser {
+  users: User[];
+}
+
+interface User {
+  id: number;
+  username: string;
+}
+
 const ChatContext = createContext<ChatContextInterface | null>(null);
 
 export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
@@ -47,6 +57,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     id: null,
     friend_username: "",
   });
+  const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
 
   const fetchConversation = async () => {
     const res = await getConversationsApi();
@@ -111,6 +122,27 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [socket, activeRoom]);
 
+  useEffect(() => {
+    const handleJoinConfirmed = (data: OnlineUser) => {
+      try {
+        // TODO
+        setOnlineUsers(data.users);
+      } catch (error) {
+        console.error(`error processing handleJoinConfirmed: ${error} `);
+      }
+    };
+
+    const handleUserUpdated = () => {
+      try {
+        // TODO
+      } catch (error) {
+        console.error(`error processing handleUserUpdated: ${error} `);
+      }
+    };
+    socket?.on("JOIN_CONFIRMED", handleJoinConfirmed);
+    socket?.on("USERS_UPDATED", handleUserUpdated);
+  }, [socket]);
+
   return (
     <ChatContext.Provider
       value={{
@@ -121,6 +153,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         storeActiveRoom,
         fetchDetailConversation,
         sendMessage,
+        onlineUsers,
       }}
     >
       {children}

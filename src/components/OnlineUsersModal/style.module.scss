@@ -1,0 +1,37 @@
+@use "../../variables.scss" as *;
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  .wrapper {
+    background-color: $bg-modal;
+    width: 40%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .close {
+        cursor: pointer;
+      }
+    }
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+}

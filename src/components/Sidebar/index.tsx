@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Input from "../Input";
 import styles from "./index.module.scss";
 import { BsPersonCircle } from "react-icons/bs";
-import { BsChatSquareTextFill } from "react-icons/bs";
+import { RiChatNewFill } from "react-icons/ri";
 import { Conversation, useChat } from "../../context/ChatContext";
 import ChatList from "../ChatList";
 import { UseAuth } from "../../context/AuthContext";
+import OnlineUsersModal from "../OnlineUsersModal";
 
 const Sidebar = () => {
   const {
@@ -16,6 +17,7 @@ const Sidebar = () => {
   } = useChat();
 
   const { profile, token } = UseAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchConversation();
@@ -40,7 +42,14 @@ const Sidebar = () => {
         <div>
           <h3>Pesan</h3>
         </div>
-        <BsChatSquareTextFill size={25} />
+        <RiChatNewFill
+          size={30}
+          className={styles.newChatIcon}
+          onClick={() => setIsModalOpen(true)}
+        />
+        {isModalOpen && (
+          <OnlineUsersModal onClose={() => setIsModalOpen(false)} />
+        )}
       </div>
       <div className={styles.menu}>
         <h4>Semua</h4>

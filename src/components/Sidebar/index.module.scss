@@ -14,6 +14,9 @@
     align-items: center;
     padding-left: 1rem;
     padding-right: 1rem;
+    .newChatIcon {
+      cursor: pointer;
+    }
   }
   .listMessage {
     display: flex;
