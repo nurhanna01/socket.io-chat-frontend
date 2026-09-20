@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+# Socket.IO Chat App — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for a real-time chat app. Built with React (Vite), TypeScript, and Socket.IO client.
 
-Currently, two official plugins are available:
+Backend: https://github.com/nurhanna01/socket.io-chat-backend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## Expanding the ESLint configuration
+- React (Vite)
+- TypeScript
+- SCSS Modules
+- Axios
+- Socket.IO client
+- React Router
+- React Hot Toast
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting Started
 
-- Configure the top-level `parserOptions` property like this:
+```bash
+npm install
+cp .env.example .env
+# fill in VITE_API_BASE_URL and VITE_SOCKET_URL
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Structure
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+src/api        - axios instance, auth/chat API calls
+src/context    - AuthContext, SocketContext, ChatContext
+src/components - Input, Button, ChatItem, Sidebar, etc.
+src/pages      - Login, Register, MessagesNew
+```
+
+## Auth
+
+Token + profile persisted in localStorage, restored on app load. Socket reconnects automatically using the stored token.
