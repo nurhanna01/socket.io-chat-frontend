@@ -8,7 +8,7 @@ interface ChatContextInterface {
   fetchConversation: () => void;
   activeMessage: Array<activeMessageType> | null;
   activeRoom: { id: number | null; friend_username: string };
-  storeActiveRoom: (id: number, friend_username: string) => void;
+  storeActiveRoom: (id: number | null, friend_username: string) => void;
   fetchDetailConversation: (room_id: number) => void;
   sendMessage: (content: string) => void;
   onlineUsers: { id: number; username: string }[];
@@ -64,8 +64,11 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     setConversations(res.data.messages);
   };
 
-  const storeActiveRoom = (id: number, friend_username: string) => {
+  const storeActiveRoom = (id: number | null, friend_username: string) => {
     setActiveRoom({ id: id, friend_username: friend_username });
+    if (id != null) {
+      fetchDetailConversation(id);
+    }
   };
 
   const fetchDetailConversation = async (room_id: number) => {
@@ -96,6 +99,11 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       if (activeRoom && activeRoom.id == data.room_id) {
         setActiveMessage((prev) => [...prev, data]);
       }
+      setConversations((prev) =>
+        prev.map((c) =>
+          c.room_id == data.room_id ? { ...c, last_message: data } : c,
+        ),
+      );
     };
 
     const handleReceive = (data: activeMessageType) => {

@@ -11,7 +11,7 @@ const MessagesNew = () => {
         <Sidebar />
       </div>
       <div className={styles.messages}>
-        {activeRoom.id != null && <Message />}
+        {activeRoom.friend_username != "" && <Message />}
       </div>
     </div>
   );

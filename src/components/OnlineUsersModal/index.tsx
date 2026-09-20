@@ -9,7 +9,7 @@ interface OnlineUsersModalProps {
 }
 
 const OnlineUsersModal = (props: OnlineUsersModalProps) => {
-  const { onlineUsers } = useChat();
+  const { onlineUsers, storeActiveRoom } = useChat();
 
   const handleSearch = () => {
     try {
@@ -18,9 +18,9 @@ const OnlineUsersModal = (props: OnlineUsersModalProps) => {
       console.error("error handleSearch:", error);
     }
   };
-  const handleClick = () => {
+  const handleClick = (username: string) => {
     try {
-      // TODO
+      storeActiveRoom(null, username);
       props.onClose();
     } catch (error) {
       console.error("error handleClick:", error);
@@ -37,7 +37,11 @@ const OnlineUsersModal = (props: OnlineUsersModalProps) => {
         <div className={styles.list}>
           {onlineUsers &&
             onlineUsers.map((user, i) => (
-              <UserList key={i} name={user.username} onClick={handleClick} />
+              <UserList
+                key={i}
+                name={user.username}
+                onClick={() => handleClick(user.username)}
+              />
             ))}
         </div>
       </div>

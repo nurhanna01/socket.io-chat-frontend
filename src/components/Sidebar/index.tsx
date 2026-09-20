@@ -9,12 +9,7 @@ import { UseAuth } from "../../context/AuthContext";
 import OnlineUsersModal from "../OnlineUsersModal";
 
 const Sidebar = () => {
-  const {
-    conversations,
-    fetchConversation,
-    storeActiveRoom,
-    fetchDetailConversation,
-  } = useChat();
+  const { conversations, fetchConversation, storeActiveRoom } = useChat();
 
   const { profile, token } = UseAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +20,6 @@ const Sidebar = () => {
 
   const getDetailMessage = async (room_id: number, friend_username: string) => {
     storeActiveRoom(room_id, friend_username);
-    fetchDetailConversation(room_id);
   };
 
   const handleSearch = () => {
